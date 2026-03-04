@@ -1,0 +1,141 @@
+{
+  "projectType": "saas",
+  "projectName": "Mintlify",
+  "projectDescription": "AI-native documentation platform for building beautiful, interactive docs sites",
+  "theme": "mint",
+  "primaryColor": "#1be39b",
+  "lightColor": "#0c8c5c",
+  "darkColor": "#040404",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart", "installation"]
+          },
+          {
+            "group": "Organize",
+            "pages": ["organize/settings", "organize/navigation", "organize/pages"]
+          },
+          {
+            "group": "Customize",
+            "pages": ["customize/themes", "customize/custom-domain", "customize/fonts"]
+          },
+          {
+            "group": "Create Content",
+            "pages": ["create/text", "create/code", "create/image-embeds"]
+          },
+          {
+            "group": "Components",
+            "pages": ["components/overview", "components/accordions", "components/callouts", "components/cards", "components/tabs"]
+          },
+          {
+            "group": "Web Editor",
+            "pages": ["editor/overview", "editor/pages", "editor/navigation", "editor/publish"]
+          },
+          {
+            "group": "AI Agent",
+            "pages": ["agent/overview", "agent/workflows", "agent/slack"]
+          },
+          {
+            "group": "Document APIs",
+            "pages": ["api-playground/overview", "api-playground/openapi-setup", "api-playground/mdx-setup"]
+          },
+          {
+            "group": "Deploy",
+            "pages": ["deploy/deployments", "deploy/preview-deployments", "deploy/custom-domain"]
+          },
+          {
+            "group": "Optimize",
+            "pages": ["optimize/analytics", "optimize/seo", "optimize/feedback"]
+          },
+          {
+            "group": "AI Features",
+            "pages": ["ai/assistant", "ai/slack-bot", "ai/discord"]
+          },
+          {
+            "group": "Integrations",
+            "pages": ["integrations/analytics", "integrations/sdks", "integrations/support"]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["guides/overview", "guides/what-is-mintlify"]
+          },
+          {
+            "group": "AI",
+            "pages": ["guides/ai-automation", "guides/assistant-embed", "guides/cursor"]
+          },
+          {
+            "group": "Best Practices",
+            "pages": ["guides/content-types", "guides/accessibility", "guides/seo", "guides/linking"]
+          },
+          {
+            "group": "Use Cases",
+            "pages": ["guides/developer-documentation", "guides/knowledge-base", "guides/support-center"]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": ["api/introduction"]
+          },
+          {
+            "group": "Admin",
+            "pages": ["api/admin/trigger-update", "api/admin/status"]
+          },
+          {
+            "group": "Agent",
+            "pages": ["api/agent/create-job", "api/agent/get-job"]
+          },
+          {
+            "group": "Assistant",
+            "pages": ["api/assistant/create-message", "api/assistant/search"]
+          },
+          {
+            "group": "Analytics",
+            "pages": ["api/analytics/feedback", "api/analytics/conversations"]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": ["changelog"]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "AI-native documentation with built-in assistant and agent",
+    "Web editor for browser-based content creation",
+    "Beautiful, customizable themes and components",
+    "API documentation with OpenAPI support",
+    "Git-based workflow with preview deployments",
+    "Analytics and integrations ecosystem",
+    "Multi-language support",
+    "SEO optimization and custom domains"
+  ],
+  "publicApiSurface": [
+    "POST /api/agent/jobs - Create agent job",
+    "GET /api/agent/jobs/:id - Get agent job",
+    "POST /api/assistant/messages/v2 - Create assistant message",
+    "GET /api/assistant/search - Search documentation",
+    "POST /api/admin/trigger - Trigger deployment",
+    "GET /api/admin/status - Get deployment status",
+    "GET /api/analytics/feedback - Get feedback analytics",
+    "GET /api/analytics/conversations - Get assistant conversations"
+  ]
+}
