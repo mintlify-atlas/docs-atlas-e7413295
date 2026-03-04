@@ -1,0 +1,180 @@
+---
+title: "Get Update Status"
+api: "GET https://api.mintlify.com/v1/project/update-status/{statusId}"
+description: "Get the status of an update from the status ID"
+keywords: ["update status", "deployment status", "check status"]
+---
+
+Get the status of an update from the status ID returned by the [Trigger update](/api/admin/trigger-update) endpoint.
+
+## Authentication
+
+Requires an admin API key (prefixed with `mint_`). Generate one on the [API keys page](https://dashboard.mintlify.com/settings/organization/api-keys) in your dashboard.
+
+## Path Parameters
+
+<ParamField path="statusId" type="string" required>
+  The status ID of a triggered update, returned from the [Trigger update](/api/admin/trigger-update) endpoint.
+</ParamField>
+
+## Response
+
+<ResponseField name="_id" type="string">
+  The status ID of the triggered update.
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  The documentation project ID.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  The status of the update. Possible values: `queued`, `in_progress`, `success`, `failure`.
+</ResponseField>
+
+<ResponseField name="summary" type="string">
+  Summary of the status of the update.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  An ISO date with the specified datetime in UTC when the update was created.
+</ResponseField>
+
+<ResponseField name="endedAt" type="string">
+  An ISO date with the specified datetime in UTC when the update ended.
+</ResponseField>
+
+<ResponseField name="logs" type="array">
+  An array of logs from the update process.
+</ResponseField>
+
+<ResponseField name="subdomain" type="string">
+  The subdomain of the docs being updated.
+</ResponseField>
+
+<ResponseField name="screenshot" type="string">
+  A screenshot of the docs.
+</ResponseField>
+
+<ResponseField name="screenshotLight" type="string">
+  A screenshot of the docs in light mode.
+</ResponseField>
+
+<ResponseField name="screenshotDark" type="string">
+  A screenshot of the docs in dark mode.
+</ResponseField>
+
+<ResponseField name="author" type="string">
+  The author of the update.
+</ResponseField>
+
+<ResponseField name="commit" type="object">
+  The commit details.
+  
+  <Expandable title="properties">
+    <ResponseField name="sha" type="string">
+      The SHA of the commit.
+    </ResponseField>
+    
+    <ResponseField name="ref" type="string">
+      The ref of the commit.
+    </ResponseField>
+    
+    <ResponseField name="message" type="string">
+      The commit message.
+    </ResponseField>
+    
+    <ResponseField name="filesChanged" type="object">
+      Details on the changed files.
+      
+      <Expandable title="properties">
+        <ResponseField name="added" type="array">
+          New files added.
+        </ResponseField>
+        
+        <ResponseField name="modified" type="array">
+          Existing files that were modified.
+        </ResponseField>
+        
+        <ResponseField name="removed" type="array">
+          Files that were removed.
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="source" type="string">
+  The source of the update trigger. Possible values: `internal`, `github-app-installation`, `api`, `github`, `dashboard`.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.mintlify.com/v1/project/update-status/6501a2b3c4d5e6f7g8h9i0j1 \
+  -H "Authorization: Bearer mint_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch(
+  'https://api.mintlify.com/v1/project/update-status/6501a2b3c4d5e6f7g8h9i0j1',
+  {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer mint_your_api_key_here',
+    },
+  }
+);
+
+const data = await response.json();
+console.log(data.status);
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://api.mintlify.com/v1/project/update-status/6501a2b3c4d5e6f7g8h9i0j1',
+    headers={
+        'Authorization': 'Bearer mint_your_api_key_here'
+    }
+)
+
+data = response.json()
+print(data['status'])
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Response
+{
+  "_id": "6501a2b3c4d5e6f7g8h9i0j1",
+  "projectId": "your_project_id",
+  "status": "success",
+  "summary": "Build completed successfully",
+  "createdAt": "2024-03-15T10:30:00.000Z",
+  "endedAt": "2024-03-15T10:32:45.000Z",
+  "logs": [
+    "Starting build process...",
+    "Installing dependencies...",
+    "Building documentation...",
+    "Deployment successful"
+  ],
+  "subdomain": "your-docs",
+  "author": "github-user",
+  "commit": {
+    "sha": "abc123def456",
+    "ref": "main",
+    "message": "Update documentation",
+    "filesChanged": {
+      "added": ["new-page.mdx"],
+      "modified": ["introduction.mdx"],
+      "removed": []
+    }
+  },
+  "source": "api"
+}
+```
+
+</ResponseExample>

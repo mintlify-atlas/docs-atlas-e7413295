@@ -1,0 +1,362 @@
+---
+title: "Install the CLI"
+description: "Set up the Mintlify CLI to preview docs locally, test changes in real-time, and catch issues before deploying."
+---
+
+Use the CLI to preview your documentation locally as you write and edit. View changes in real-time before deploying, test your documentation site's appearance and features, and catch issues like broken links or accessibility problems.
+
+The CLI also has utilities for maintaining your documentation, including commands to rename files, validate OpenAPI specifications, and migrate content between formats.
+
+## System requirements
+
+Before installing the CLI, ensure your system meets these requirements:
+
+<CardGroup cols={2}>
+  <Card title="Node.js" icon="node-js">
+    Version 20.17.0 or higher (LTS versions recommended)
+  </Card>
+  
+  <Card title="Git" icon="git-alt">
+    Git installed for repository management
+  </Card>
+</CardGroup>
+
+<Note>
+  Need to install Node.js? Download it from [nodejs.org](https://nodejs.org/en). We recommend using an LTS (Long Term Support) version for stability.
+</Note>
+
+## Clone your repository
+
+Before using the CLI, clone your documentation repository locally:
+
+<Steps>
+  <Step title="Locate your repository">
+    Go to the [Git settings](https://dashboard.mintlify.com/settings/deployment/git-settings) page of your dashboard.
+    
+    Note your repository location. It is one of these formats:
+    - `mintlify-community/docs-{org-name}-{id}` (Mintlify-hosted repository)
+    - `your-org/your-repo` (your own GitHub repository)
+  </Step>
+  
+  <Step title="Clone the repository">
+    <Tabs>
+      <Tab title="Your own repository">
+        Replace `your-org/your-repo` with your actual repository details from Git settings.
+        
+        ```bash
+        git clone https://github.com/your-org/your-repo
+        cd your-repo
+        ```
+
+        <Tip>
+          **GitHub App required.** To enable automatic deployments when you push changes, you must install the GitHub app. See the deployment documentation for more information.
+        </Tip>
+      </Tab>
+      
+      <Tab title="Mintlify-hosted repository">
+        You can clone your repository as a private or public repository. Public repositories are visible to anyone who navigates to the repository URL. Private repositories are only visible to people in your organization.
+        
+        On the [Git settings](https://dashboard.mintlify.com/settings/deployment/git-settings) page of your dashboard, select **Clone as private** or **Clone as public**.
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Install the CLI
+
+Install the Mintlify CLI globally using your preferred package manager:
+
+<CodeGroup>
+  ```bash npm
+  npm i -g mint
+  ```
+
+  ```bash pnpm
+  pnpm add -g mint
+  ```
+  
+  ```bash yarn
+  yarn global add mint
+  ```
+</CodeGroup>
+
+<Note>
+  If you encounter permission errors on macOS or Linux, try running the command with `sudo`: `sudo npm i -g mint`
+</Note>
+
+## Preview your docs locally
+
+Navigate to your documentation directory containing your `docs.json` file and run:
+
+```bash
+mint dev
+```
+
+A local preview of your documentation is available at `http://localhost:3000`.
+
+<Tip>
+  Changes you make to your documentation files automatically refresh in the browser. No need to restart the development server.
+</Tip>
+
+Alternatively, if you do not want to install the CLI globally, you can run a one-time script:
+
+```bash
+npx mint dev
+```
+
+### Custom ports
+
+By default, the CLI uses port 3000. You can customize the port using the `--port` flag:
+
+```bash
+mint dev --port 3333
+```
+
+If you attempt to run on a port that is already in use, the CLI uses the next available port:
+
+```
+Port 3000 is already in use. Trying 3001 instead.
+```
+
+### Skip OpenAPI processing
+
+If you have many OpenAPI files, skip OpenAPI file processing during local development to improve performance:
+
+```bash
+mint dev --disable-openapi
+```
+
+### Preview as a specific group
+
+If you use group-based access control to restrict access to your documentation, you can preview as a specific authentication group:
+
+```bash
+mint dev --groups admin
+```
+
+## Update the CLI
+
+Keep your CLI up to date to ensure your local preview matches your production site:
+
+```bash
+mint update
+```
+
+If the `mint update` command is not available on your local version, reinstall the CLI with the latest version:
+
+<CodeGroup>
+  ```bash npm
+  npm i -g mint@latest
+  ```
+
+  ```bash pnpm
+  pnpm add -g mint@latest
+  ```
+</CodeGroup>
+
+## Additional CLI commands
+
+The CLI includes several utilities to help maintain and validate your documentation:
+
+### Find broken links
+
+Identify broken links in your documentation:
+
+```bash
+mint broken-links
+```
+
+The command ignores files matching `.mintignore` patterns. Links that point to ignored files are reported as broken.
+
+By default, only internal links are checked. Use flags to expand the scope:
+
+| Flag | Description |
+| --- | --- |
+| `--check-anchors` | Also validate anchor links (for example, `/page#section`) against heading slugs |
+| `--check-external` | Also check external links for broken URLs |
+| `--check-snippets` | Also check links inside `<Snippet>` components |
+
+### Find accessibility issues
+
+Test the color contrast ratios and search for missing alt text on images and videos:
+
+```bash
+mint a11y
+```
+
+Use flags to check for specific accessibility issues:
+
+<CodeGroup>
+  ```bash Check only for missing alt text
+  mint a11y --skip-contrast
+  ```
+
+  ```bash Check only for color contrast issues
+  mint a11y --skip-alt-text
+  ```
+</CodeGroup>
+
+### Validate documentation build
+
+Validate your documentation build in strict mode, which exits with an error if there are any warnings or errors:
+
+```bash
+mint validate
+```
+
+This command is useful for CI/CD pipelines to prevent broken documentation deployments.
+
+Available flags:
+- `--groups [groupname]`: Mock user groups for validation (useful when testing group-based access control)
+- `--disable-openapi`: Disable OpenAPI file generation during validation
+
+### Check OpenAPI spec
+
+Check your OpenAPI file for errors:
+
+```bash
+mint openapi-check <OpenAPI filename or URL>
+```
+
+Pass a filename or a URL:
+
+<CodeGroup>
+  ```bash Local file
+  mint openapi-check ./openapi.yaml
+  ```
+
+  ```bash Remote URL
+  mint openapi-check https://petstore3.swagger.io/api/v3/openapi.json
+  ```
+</CodeGroup>
+
+### Rename files
+
+Rename and update all references to files:
+
+```bash
+mint rename <path/to/old-filename> <path/to/new-filename>
+```
+
+### Create a new project
+
+Create a new documentation project from the starter template:
+
+```bash
+mint new [directory]
+```
+
+This command clones the starter kit into a specified directory. If you do not specify a directory, the CLI tool prompts you to create a new subdirectory or overwrite the current directory.
+
+<Warning>
+  Overwriting the current directory deletes any existing files.
+</Warning>
+
+#### Flags for non-interactive environments
+
+When running `mint new` in non-interactive environments like CI/CD pipelines or with AI coding agents, you must provide all required flags:
+
+| Flag | Description | Required |
+| --- | --- | --- |
+| `--name` | Set the name of the new project | Yes |
+| `--theme` | Set the theme of the new project | Yes |
+| `--force` | Overwrite the current directory without prompting | No |
+
+<Tip>
+  The CLI automatically detects non-interactive environments. If required flags are missing, it outputs usage instructions instead of hanging on prompts.
+</Tip>
+
+## Development tools
+
+While developing locally, we recommend using extensions in your IDE to recognize and format MDX files.
+
+### VS Code / Cursor / Windsurf
+
+<CardGroup cols={2}>
+  <Card title="MDX VS Code extension" icon="file-code">
+    Syntax highlighting for MDX files
+  </Card>
+  
+  <Card title="Prettier" icon="wand-magic-sparkles">
+    Code formatting for consistent style
+  </Card>
+</CardGroup>
+
+Install from the VS Code marketplace:
+- [MDX VS Code extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+### JetBrains IDEs
+
+<CardGroup cols={2}>
+  <Card title="MDX IntelliJ IDEA plugin" icon="file-code">
+    Syntax highlighting for MDX files
+  </Card>
+  
+  <Card title="Prettier" icon="wand-magic-sparkles">
+    Code formatting for consistent style
+  </Card>
+</CardGroup>
+
+Install the [MDX IntelliJ IDEA plugin](https://plugins.jetbrains.com/plugin/14944-mdx) and set up [Prettier](https://prettier.io/docs/webstorm) for code formatting.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
+    This may be due to an outdated version of Node.js. Try the following:
+
+    1. Remove the currently installed version of the mint CLI: `npm uninstall -g mint`
+    2. Upgrade to Node.js v20.17.0 or higher
+    3. Reinstall the mint CLI: `npm install -g mint`
+  </Accordion>
+  
+  <Accordion title="Issue: Encountering an unknown error">
+    Go to the root of your device and delete the `~/.mintlify` folder. Afterwards, run `mint dev` again.
+  </Accordion>
+  
+  <Accordion title="Error: permission denied">
+    This is due to not having the required permissions to globally install node packages.
+
+    **Solution**: Try running `sudo npm i -g mint`. When prompted, enter the password that you use to unlock your computer.
+  </Accordion>
+  
+  <Accordion title="The local preview doesn't look the same as my docs do on the web">
+    This is likely due to an outdated version of the CLI.
+
+    **Solution**: Run `mint update` to get the latest changes.
+  </Accordion>
+  
+  <Accordion title="mintlify versus mint package">
+    If you have any problems with the CLI package, you should first run `npm ls -g`. This command shows what packages are globally installed on your machine.
+
+    If you don't use npm or don't see it in the -g list, try `which mint` to locate the installation.
+    
+    If you have a package named `mint` and a package named `mintlify` installed, you should uninstall `mintlify`.
+    
+    1. Uninstall the old package:
+    ```bash
+    npm uninstall -g mintlify
+    ```
+    2. Clear your npm cache:
+    ```bash
+    npm cache clean --force
+    ```
+    3. Reinstall the new package:
+    ```bash
+    npm i -g mint
+    ```
+  </Accordion>
+  
+  <Accordion title="Client version shows 'none' after installation">
+    If you run `mint version` and the client version displays as `none`, the CLI may be unable to download the client application due to a corporate firewall or VPN blocking the download.
+
+    **Solution**: Ask your IT administrator to add `releases.mintlify.com` to your network allowlist to enable local development with the CLI.
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<Card title="Start building" icon="hammer" href="/quickstart">
+  Now that you have the CLI installed, follow the quickstart guide to create your first documentation site.
+</Card>

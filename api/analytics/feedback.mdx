@@ -1,0 +1,227 @@
+---
+title: "Get User Feedback"
+api: "GET https://api.mintlify.com/v1/analytics/{projectId}/feedback"
+description: "Export user feedback collected from your documentation"
+keywords: ["analytics", "feedback", "export", "user feedback"]
+---
+
+Use this endpoint to export user feedback collected from your documentation. Feedback includes contextual feedback from page ratings and code snippet feedback.
+
+Paginate through results using the `cursor` parameter returned in the response. Continue fetching while `hasMore` is `true`.
+
+## Authentication
+
+Requires an admin API key (prefixed with `mint_`). Generate one on the [API keys page](https://dashboard.mintlify.com/settings/organization/api-keys) in your dashboard.
+
+## Path Parameters
+
+<ParamField path="projectId" type="string" required>
+  Your project ID. Can be copied from the [API keys](https://dashboard.mintlify.com/settings/organization/api-keys) page in your dashboard.
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="dateFrom" type="string">
+  Date in ISO 8601 or YYYY-MM-DD format. Filter results to include feedback from this date onwards.
+  
+  Example: `2024-01-01`
+</ParamField>
+
+<ParamField query="dateTo" type="string">
+  Date in ISO 8601 or YYYY-MM-DD format. `dateTo` is an exclusive upper limit. Results include dates before, but not on, the specified date.
+  
+  Example: `2024-01-31`
+</ParamField>
+
+<ParamField query="source" type="string">
+  Filter by feedback source. Possible values: `code_snippet`, `contextual`.
+</ParamField>
+
+<ParamField query="status" type="string">
+  Comma-separated list of statuses to filter by. Possible values: `pending`, `in_progress`, `resolved`, `dismissed`.
+  
+  Example: `pending,in_progress`
+</ParamField>
+
+<ParamField query="limit" type="number" default={50}>
+  Max results per page. Minimum: 1, Maximum: 100.
+</ParamField>
+
+<ParamField query="cursor" type="string">
+  Pagination cursor from the previous response's `nextCursor` field.
+</ParamField>
+
+## Response
+
+<ResponseField name="feedback" type="array">
+  List of feedback entries.
+  
+  <Expandable title="Feedback object">
+    <ResponseField name="id" type="string">
+      Unique feedback identifier.
+    </ResponseField>
+    
+    <ResponseField name="path" type="string">
+      The path or URL to the source document.
+    </ResponseField>
+    
+    <ResponseField name="comment" type="string" nullable>
+      Text of the user's feedback comment.
+    </ResponseField>
+    
+    <ResponseField name="createdAt" type="string" nullable>
+      Timestamp when the feedback was submitted.
+    </ResponseField>
+    
+    <ResponseField name="source" type="string">
+      Where the feedback originated. `code_snippet` is feedback on a code block, `contextual` is page-level feedback.
+    </ResponseField>
+    
+    <ResponseField name="status" type="string">
+      Current review status of the feedback. Possible values: `pending`, `in_progress`, `resolved`, `dismissed`.
+    </ResponseField>
+    
+    <ResponseField name="helpful" type="boolean">
+      Whether the user found the content helpful (contextual feedback only).
+    </ResponseField>
+    
+    <ResponseField name="contact" type="string" nullable>
+      Email address the user provided for follow-up (contextual feedback only).
+    </ResponseField>
+    
+    <ResponseField name="code" type="string">
+      The code snippet the feedback relates to (code snippet feedback only).
+    </ResponseField>
+    
+    <ResponseField name="filename" type="string" nullable>
+      Filename associated with the code snippet (code snippet feedback only).
+    </ResponseField>
+    
+    <ResponseField name="lang" type="string" nullable>
+      Programming language of the code snippet (code snippet feedback only).
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="nextCursor" type="string" nullable>
+  Cursor to retrieve the next page of results. Null if no more results.
+</ResponseField>
+
+<ResponseField name="hasMore" type="boolean">
+  Whether additional results are available beyond this page.
+</ResponseField>
+
+## Filtering
+
+Filter feedback by:
+- **Date range**: Use `dateFrom` and `dateTo` to limit results to a specific time period
+- **Source**: Filter by `code_snippet` or `contextual` feedback types
+- **Status**: Filter by status values like `pending`, `in_progress`, `resolved`, or `dismissed`
+
+## Response types
+
+The response contains different feedback types based on the source:
+
+- **Contextual feedback**: Includes `helpful` boolean and optional `contact` email
+- **Code snippet feedback**: Includes `code`, `filename`, and `lang` fields
+
+<RequestExample>
+
+```bash cURL
+curl -X GET "https://api.mintlify.com/v1/analytics/your_project_id/feedback?dateFrom=2024-01-01&limit=50" \
+  -H "Authorization: Bearer mint_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch(
+  'https://api.mintlify.com/v1/analytics/your_project_id/feedback?dateFrom=2024-01-01&limit=50',
+  {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer mint_your_api_key_here',
+    },
+  }
+);
+
+const data = await response.json();
+console.log(data.feedback);
+
+// Paginate through results
+let cursor = data.nextCursor;
+while (cursor && data.hasMore) {
+  const nextPage = await fetch(
+    `https://api.mintlify.com/v1/analytics/your_project_id/feedback?cursor=${cursor}`,
+    {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer mint_your_api_key_here' },
+    }
+  );
+  const pageData = await nextPage.json();
+  console.log(pageData.feedback);
+  cursor = pageData.nextCursor;
+}
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://api.mintlify.com/v1/analytics/your_project_id/feedback',
+    headers={'Authorization': 'Bearer mint_your_api_key_here'},
+    params={
+        'dateFrom': '2024-01-01',
+        'limit': 50
+    }
+)
+
+data = response.json()
+print(data['feedback'])
+
+# Paginate through results
+cursor = data['nextCursor']
+while cursor and data['hasMore']:
+    response = requests.get(
+        'https://api.mintlify.com/v1/analytics/your_project_id/feedback',
+        headers={'Authorization': 'Bearer mint_your_api_key_here'},
+        params={'cursor': cursor}
+    )
+    data = response.json()
+    print(data['feedback'])
+    cursor = data['nextCursor']
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Response
+{
+  "feedback": [
+    {
+      "id": "fb_abc123",
+      "path": "/getting-started",
+      "comment": "This section was very helpful!",
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "source": "contextual",
+      "status": "resolved",
+      "helpful": true,
+      "contact": "user@example.com"
+    },
+    {
+      "id": "fb_def456",
+      "path": "/api/examples",
+      "comment": "This code doesn't work with the latest version",
+      "createdAt": "2024-01-16T14:22:00.000Z",
+      "source": "code_snippet",
+      "status": "pending",
+      "code": "const example = require('example');",
+      "filename": "index.js",
+      "lang": "javascript"
+    }
+  ],
+  "nextCursor": "cursor_xyz789",
+  "hasMore": true
+}
+```
+
+</ResponseExample>

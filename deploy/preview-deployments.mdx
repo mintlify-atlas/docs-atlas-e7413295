@@ -1,0 +1,150 @@
+---
+title: "Preview deployments"
+description: "Get unique preview URLs for pull requests to review changes before merging."
+keywords: ["preview URLs", "pull request previews", "branch previews", "staging environments"]
+---
+
+<Info>
+  Preview deployments are available on [Pro and Enterprise plans](https://mintlify.com/pricing?ref=preview-deployments).
+</Info>
+
+Preview deployments let you see how changes to your docs look before merging to production. Each preview creates a shareable URL that updates automatically as you push new changes.
+
+Preview URLs are publicly viewable by default. Share a preview link with anyone who needs to review your changes.
+
+## Create preview deployments
+
+Preview deployments are created automatically through pull requests or manually from your dashboard.
+
+### Automatic previews
+
+<Note>
+  Automatic previews are only created for pull requests targeting your [deployment branch](/guides/git-concepts#deployment-branch).
+</Note>
+
+When you create a pull request, the Mintlify bot automatically adds a link to view the preview deployment in your pull request. The preview updates each time you push new commits to the branch.
+
+<Frame>
+  <img src="/images/previews/preview-deployment-light.png" alt="Link to view deployment in the pull request timeline" className="block dark:hidden" />
+  <img src="/images/previews/preview-deployment-dark.png" alt="Link to view deployment in the pull request timeline" className="hidden dark:block" />
+</Frame>
+
+**GitHub preview deployments**
+
+For GitHub repositories, the Mintlify GitHub App automatically creates preview deployments when:
+
+- You open a pull request targeting your deployment branch
+- You push new commits to an existing pull request branch
+- The pull request remains open (previews are deleted when PRs are closed or merged)
+
+The app creates check runs on your pull requests showing the deployment status. Click the "View deployment" link in the check details to access your preview.
+
+**GitLab preview deployments**
+
+For GitLab repositories, configure webhooks to enable automatic preview deployments for merge requests. The webhook triggers preview builds when:
+
+- You create a merge request targeting your deployment branch
+- You push new commits to an existing merge request
+- The merge request is updated or synchronized
+
+See [GitLab](/deploy/gitlab) for webhook configuration instructions.
+
+### Manual previews
+
+You can manually create a preview for any branch.
+
+1. Go to your [dashboard](https://dashboard.mintlify.com/).
+2. Select **Previews**.
+3. Select **Create custom preview**.
+4. Enter the name of the branch you want to preview.
+5. Select **Create deployment**.
+
+Manual previews are useful for:
+
+- Testing experimental branches before opening a pull request
+- Creating long-lived staging environments for specific features
+- Sharing work-in-progress documentation with stakeholders
+- Verifying fixes without opening a formal pull request
+
+## Redeploy a preview
+
+Redeploy a preview to refresh content or retry after a failed deployment.
+
+1. Select the preview from your [dashboard](https://dashboard.mintlify.com/).
+2. Select **Redeploy**.
+
+<Frame>
+  <img src="/images/previews/redeploy-preview-light.png" alt="The Previews menu with the deploy button emphasized by an orange rectangle." className="block dark:hidden" />
+  <img src="/images/previews/redeploy-preview-dark.png" alt="The Previews menu with the deploy button emphasized by an orange rectangle." className="hidden dark:block" />
+</Frame>
+
+## Preview widget
+
+The preview widget appears on preview deployments to help you navigate and review updated pages. The widget is a floating button in the bottom-right corner of your preview deployment.
+
+<Frame>
+  <img src="/images/previews/widget-light.png" alt="Preview widget expanded to show list of changed files." className="block dark:hidden" />
+  <img src="/images/previews/widget-dark.png" alt="Preview widget expanded to show list of changed files." className="hidden dark:block" />
+</Frame>
+
+1. Click the widget to show all added, modified, or removed files in the preview.
+2. Click a file to view the changes on the corresponding page.
+3. Use the search bar to filter the list of changed files.
+
+The widget only appears on preview deployments, not on your live site or local previews.
+
+## Restrict access to preview deployments
+
+By default, preview deployments are publicly accessible to anyone with the URL. You can restrict access to authenticated members of your Mintlify organization.
+
+1. Navigate to the **Previews** section in the [Add-ons](https://dashboard.mintlify.com/products/addons) page of your dashboard.
+2. Click the **Preview authentication** toggle to enable or disable preview authentication.
+  <Frame>
+    <img src="/images/previews/preview-auth-light.png" alt="The preview authentication toggle in the Add-ons page" className="block dark:hidden" />
+    <img src="/images/previews/preview-auth-dark.png" alt="The preview authentication toggle in the Add-ons page" className="hidden dark:block" />
+  </Frame>
+
+When enabled, users must authenticate with their Mintlify account to access preview deployments. This is useful for:
+
+- Protecting confidential product information before public release
+- Restricting internal documentation previews to team members
+- Complying with security policies that require authentication
+- Preventing unauthorized access to unreleased features
+
+## Troubleshooting preview deployments
+
+If your preview deployment fails, try these troubleshooting steps.
+
+- **View the build logs**: In your [dashboard](https://dashboard.mintlify.com/), go to **Previews** and click the failed preview. The deployment logs show errors that caused failures.
+- **Check your configuration**:
+   - Invalid `docs.json` syntax
+   - Missing or incorrect file paths referenced in your navigation
+   - Invalid frontmatter in MDX files
+   - Broken image links or missing image files
+- **Validate locally**: Run `mint dev` locally to catch build errors before pushing to the repository.
+- **Check recent changes**: Review the most recent commits in your branch to identify what changes caused the build to fail.
+
+### Common preview issues
+
+**Preview not created automatically**
+
+Verify that:
+- The GitHub App is installed and has access to your repository (GitHub only)
+- Webhooks are configured correctly (GitLab only)
+- Your pull request targets the correct deployment branch
+- The branch name doesn't contain invalid characters
+
+**Preview shows outdated content**
+
+Try these solutions:
+- Manually trigger a redeploy from your dashboard
+- Push a new commit to the branch to trigger a rebuild
+- Check that your latest commits were successfully pushed to the remote repository
+
+**Preview deployment takes too long**
+
+Large documentation sites may take longer to build. Consider:
+- Reducing the number of pages or assets
+- Optimizing image sizes
+- Simplifying complex navigation structures
+- Contacting support if build times consistently exceed 10 minutes

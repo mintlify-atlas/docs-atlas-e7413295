@@ -1,0 +1,348 @@
+---
+title: "Analytics Integrations"
+description: "Connect analytics platforms to track user engagement and documentation usage."
+---
+
+Track how users interact with your documentation by connecting to third-party analytics platforms. Mintlify sends engagement events to your configured analytics providers automatically.
+
+## How it works
+
+When you add analytics integrations to your documentation site, Mintlify tracks user interactions like page views, search queries, API playground requests, and feedback submissions. You can connect multiple analytics providers by adding your API keys to the `docs.json` file.
+
+## Supported platforms
+
+Mintlify integrates with the following analytics platforms:
+
+<CardGroup cols={2}>
+  <Card title="Google Analytics 4" icon="chart-line" href="#google-analytics-4">
+    Track visitor behavior with GA4 measurement ID
+  </Card>
+  <Card title="Mixpanel" icon="chart-mixed" href="#mixpanel">
+    Product analytics and user behavior tracking
+  </Card>
+  <Card title="PostHog" icon="flag" href="#posthog">
+    Product analytics with session recordings
+  </Card>
+  <Card title="Amplitude" icon="wave-pulse" href="#amplitude">
+    User behavior and product analytics
+  </Card>
+  <Card title="Clarity" icon="eye" href="#clarity">
+    Microsoft Clarity session recordings and heatmaps
+  </Card>
+  <Card title="Segment" icon="chart-network" href="#segment">
+    Customer data platform integration
+  </Card>
+  <Card title="Plausible" icon="chart-simple" href="#plausible">
+    Privacy-focused analytics
+  </Card>
+  <Card title="Fathom" icon="chart-column" href="#fathom">
+    Privacy-first website analytics
+  </Card>
+  <Card title="Heap" icon="layer-group" href="#heap">
+    Automatic event tracking
+  </Card>
+  <Card title="Hotjar" icon="fire" href="#hotjar">
+    Heatmaps and user feedback
+  </Card>
+  <Card title="LogRocket" icon="circle-play" href="#logrocket">
+    Session replay and error tracking
+  </Card>
+  <Card title="Hightouch" icon="arrows-turn-to-dots" href="#hightouch">
+    Reverse ETL and data activation
+  </Card>
+</CardGroup>
+
+## Configuration
+
+Add your analytics provider credentials to the `integrations` object in `docs.json`. Only include the platforms you want to use.
+
+<Warning>
+Analytics integrations only require **public API keys**, which are accessible to anyone viewing your documentation site. Never include private API keys in your `docs.json`.
+</Warning>
+
+### Google Analytics 4
+
+Track visitor behavior with Google Analytics 4.
+
+```json docs.json
+"integrations": {
+  "ga4": {
+    "measurementId": "G-XXXXXXXXXX"
+  }
+}
+```
+
+**Setup steps:**
+1. Create a GA4 property in Google Analytics
+2. Create a web stream with your docs URL
+3. Copy the Measurement ID (format: `G-XXXXXXX`)
+4. Add it to your `docs.json`
+
+<Note>
+Google Analytics takes 2-3 days to show data. Preview links have analytics disabled.
+</Note>
+
+### Mixpanel
+
+Track product analytics and user behavior.
+
+```json docs.json
+"integrations": {
+  "mixpanel": {
+    "projectToken": "YOUR_MIXPANEL_PROJECT_TOKEN"
+  }
+}
+```
+
+Find your project token in [Mixpanel project settings](https://mixpanel.com/settings/project).
+
+### PostHog
+
+Product analytics with session recordings and feature flags.
+
+```json docs.json
+"integrations": {
+  "posthog": {
+    "apiKey": "phc_xxxxxxxxxxxxx",
+    "apiHost": "https://app.posthog.com",
+    "sessionRecording": true
+  }
+}
+```
+
+<ParamField path="apiKey" type="string" required>
+  Your PostHog project API key (starts with `phc_`)
+</ParamField>
+
+<ParamField path="apiHost" type="string">
+  PostHog instance URL. Only required for self-hosted. Defaults to `https://app.posthog.com`
+</ParamField>
+
+<ParamField path="sessionRecording" type="boolean" default="true">
+  Enable or disable session recordings
+</ParamField>
+
+### Amplitude
+
+User behavior and documentation analytics.
+
+```json docs.json
+"integrations": {
+  "amplitude": {
+    "apiKey": "76bb138bf3fbf58186XXX00000"
+  }
+}
+```
+
+### Clarity
+
+Microsoft Clarity session recordings and heatmaps.
+
+```json docs.json
+"integrations": {
+  "clarity": {
+    "projectId": "abc123xyz"
+  }
+}
+```
+
+**Getting your project ID:**
+1. Create a [Clarity account](https://clarity.microsoft.com/projects)
+2. Click **Get tracking code**
+3. Copy your project ID
+
+### Segment
+
+Customer data platform for routing events to multiple destinations.
+
+```json docs.json
+"integrations": {
+  "segment": {
+    "key": "YOUR_SEGMENT_WRITE_KEY"
+  }
+}
+```
+
+### Plausible
+
+Privacy-focused analytics platform.
+
+```json docs.json
+"integrations": {
+  "plausible": {
+    "domain": "docs.yoursite.com"
+  }
+}
+```
+
+### Fathom
+
+Privacy-first website analytics.
+
+```json docs.json
+"integrations": {
+  "fathom": {
+    "siteId": "YOUR_SITE_ID"
+  }
+}
+```
+
+### Heap
+
+Automatic event tracking for user interactions.
+
+```json docs.json
+"integrations": {
+  "heap": {
+    "appId": "YOUR_HEAP_APP_ID"
+  }
+}
+```
+
+### Hotjar
+
+Heatmaps, session recordings, and user feedback.
+
+```json docs.json
+"integrations": {
+  "hotjar": {
+    "hjid": "YOUR_HOTJAR_ID",
+    "hjsv": "6"
+  }
+}
+```
+
+### LogRocket
+
+Session replay and error tracking.
+
+```json docs.json
+"integrations": {
+  "logrocket": {
+    "appId": "your-app/your-project"
+  }
+}
+```
+
+### Hightouch
+
+Reverse ETL and data activation platform.
+
+```json docs.json
+"integrations": {
+  "hightouch": {
+    "apiKey": "YOUR_API_KEY",
+    "apiHost": "https://api.hightouch.com"
+  }
+}
+```
+
+### Google Tag Manager
+
+Manage multiple tracking tags.
+
+```json docs.json
+"integrations": {
+  "gtm": {
+    "tagId": "GTM-XXXXXXX"
+  }
+}
+```
+
+### Other platforms
+
+Mintlify also supports:
+- **Adobe Analytics** - Enterprise analytics platform
+- **Clearbit** - B2B data enrichment
+- **Pirsch** - Privacy-friendly analytics
+
+See the [analytics overview documentation](/integrations/analytics/overview) for the complete list.
+
+## Tracked events
+
+All events use the `docs.` prefix.
+
+### Page views and navigation
+
+| Event | Description |
+|-------|-------------|
+| `docs.content.view` | User views a page |
+| `docs.navitem.click` | User clicks a navigation item |
+| `docs.navitem.cta_click` | User clicks a CTA button |
+
+### Search
+
+| Event | Description |
+|-------|-------------|
+| `docs.search.query` | User performs a search |
+| `docs.search.result_click` | User clicks a search result |
+
+### Code and API playground
+
+| Event | Description |
+|-------|-------------|
+| `docs.code_block.copy` | User copies code |
+| `docs.api_playground.request` | User makes an API request |
+
+### AI Assistant
+
+| Event | Description |
+|-------|-------------|
+| `docs.assistant.enter` | User opens AI assistant |
+| `docs.assistant.completed` | Chat session completes |
+| `docs.assistant.thumbs_up` | Positive feedback |
+| `docs.assistant.thumbs_down` | Negative feedback |
+
+### Interactive components
+
+| Event | Description |
+|-------|-------------|
+| `docs.accordion.open` | User opens accordion |
+| `docs.expandable.open` | User opens expandable |
+
+## Example configuration
+
+Connect multiple analytics providers:
+
+```json docs.json
+{
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-XXXXXXXXXX"
+    },
+    "posthog": {
+      "apiKey": "phc_xxxxxxxxxxxxx",
+      "apiHost": "https://app.posthog.com"
+    },
+    "mixpanel": {
+      "projectToken": "xxxxxxxxxxxxx"
+    },
+    "segment": {
+      "key": "xxxxxxxxxxxxx"
+    }
+  }
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Events not appearing in analytics platform">
+    - Verify your API key is correct
+    - Check that no content security policies are blocking the analytics script
+    - Ensure you're not viewing a preview link (analytics are disabled on previews)
+    - Some platforms take 24-48 hours to show data
+  </Accordion>
+  
+  <Accordion title="Session recordings not working">
+    - Add your docs URL to the platform's authorized domains list
+    - For PostHog, check that `sessionRecording` is not set to `false`
+    - Verify your browser allows third-party scripts
+  </Accordion>
+  
+  <Accordion title="Multiple analytics platforms conflicting">
+    - Mintlify supports multiple analytics providers simultaneously
+    - Each platform receives the same events independently
+    - No special configuration needed for multiple providers
+  </Accordion>
+</AccordionGroup>

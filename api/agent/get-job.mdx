@@ -1,0 +1,152 @@
+---
+title: "Get Agent Job"
+api: "GET https://api.mintlify.com/v1/agent/{projectId}/job/{id}"
+description: "Retrieve the details and status of a specific agent job"
+keywords: ["agent job", "status", "retrieve", "details"]
+---
+
+This endpoint retrieves the details and status of a specific agent job by its unique identifier. Use this to check the progress, status, and results of a previously created agent job.
+
+## Authentication
+
+Requires an admin API key (prefixed with `mint_`). Generate one on the [API keys page](https://dashboard.mintlify.com/settings/organization/api-keys) in your dashboard.
+
+## Path Parameters
+
+<ParamField path="projectId" type="string" required>
+  Your project ID. Can be copied from the [API keys](https://dashboard.mintlify.com/settings/organization/api-keys) page in your dashboard.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the agent job to retrieve.
+</ParamField>
+
+## Response
+
+The response includes information such as:
+- Job execution status and completion state
+- Branch information and pull request details
+- Session metadata and timestamps
+
+<ResponseField name="sessionId" type="string">
+  The unique session identifier.
+</ResponseField>
+
+<ResponseField name="subdomain" type="string">
+  The subdomain this session belongs to.
+</ResponseField>
+
+<ResponseField name="branch" type="string" nullable>
+  Git branch name where changes were made.
+</ResponseField>
+
+<ResponseField name="haulted" type="boolean">
+  Whether the session execution was halted.
+</ResponseField>
+
+<ResponseField name="haultReason" type="string">
+  Reason for session halt. Possible values: `completed`, `github_missconfigured`, `error`.
+</ResponseField>
+
+<ResponseField name="pullRequestLink" type="string">
+  Link to the created pull request.
+</ResponseField>
+
+<ResponseField name="messageToUser" type="string">
+  Message for the user about the session outcome.
+</ResponseField>
+
+<ResponseField name="todos" type="array">
+  List of todo items from the session.
+  
+  <Expandable title="Todo object">
+    <ResponseField name="content" type="string">
+      Brief description of the task.
+    </ResponseField>
+    
+    <ResponseField name="status" type="string">
+      Current status of the task. Possible values: `pending`, `in_progress`, `completed`, `cancelled`.
+    </ResponseField>
+    
+    <ResponseField name="priority" type="string">
+      Priority level of the task. Possible values: `high`, `medium`, `low`.
+    </ResponseField>
+    
+    <ResponseField name="id" type="string">
+      Unique identifier for the todo item.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  Timestamp when the session was created (ISO 8601 format).
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.mintlify.com/v1/agent/your_project_id/job/session_abc123 \
+  -H "Authorization: Bearer mint_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch(
+  'https://api.mintlify.com/v1/agent/your_project_id/job/session_abc123',
+  {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer mint_your_api_key_here',
+    },
+  }
+);
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://api.mintlify.com/v1/agent/your_project_id/job/session_abc123',
+    headers={
+        'Authorization': 'Bearer mint_your_api_key_here'
+    }
+)
+
+data = response.json()
+print(data)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Response
+{
+  "sessionId": "session_abc123",
+  "subdomain": "your-docs",
+  "branch": "agent-updates",
+  "haulted": true,
+  "haultReason": "completed",
+  "pullRequestLink": "https://github.com/your-org/your-repo/pull/123",
+  "messageToUser": "Successfully updated the getting started guide with installation instructions.",
+  "todos": [
+    {
+      "content": "Update installation section",
+      "status": "completed",
+      "priority": "high",
+      "id": "todo_1"
+    },
+    {
+      "content": "Add code examples",
+      "status": "completed",
+      "priority": "medium",
+      "id": "todo_2"
+    }
+  ],
+  "createdAt": "2024-03-15T10:30:00.000Z"
+}
+```
+
+</ResponseExample>

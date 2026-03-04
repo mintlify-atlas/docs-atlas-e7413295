@@ -1,97 +1,254 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Mintlify Documentation"
+description: "AI-native documentation platform for building beautiful, interactive docs sites"
+mode: "custom"
 ---
 
-## Setting up
+<div className="relative overflow-hidden bg-gradient-to-br from-[#1be39b] via-[#0c8c5c] to-[#040404] dark:from-[#0c8c5c] dark:via-[#040404] dark:to-[#000000]">
+  <div className="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+  
+  <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+    <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="lg:col-span-7">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+          Beautiful documentation, powered by AI
+        </h1>
+        <p className="mt-6 text-lg sm:text-xl text-white/90 max-w-2xl">
+          Build modern documentation sites with AI-native features, beautiful themes, and powerful components. Deploy in minutes, not days.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a
+            href="/quickstart"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-[#040404] font-semibold hover:bg-white/90 transition-colors"
+          >
+            Get Started
+          </a>
+          <a
+            href="/introduction"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-white/30 bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-Get your documentation site up and running in minutes.
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white">
+    Quick start
+  </h2>
+  <p className="mt-2 text-base text-gray-600 dark:text-gray-400">
+    Get your documentation site live in minutes
+  </p>
+  
+  <Steps className="mt-8">
+    <Step title="Install the Mintlify CLI">
+      Install the CLI to preview and develop your docs locally.
+      
+      ```bash npm
+      npm install -g mint
+      ```
+      
+      ```bash yarn
+      yarn global add mint
+      ```
+      
+      ```bash pnpm
+      pnpm add -g mint
+      ```
+    </Step>
+    
+    <Step title="Create your docs repository">
+      Clone the starter template or connect your existing repository.
+      
+      ```bash
+      git clone https://github.com/mintlify/starter.git
+      cd starter
+      ```
+      
+      <Note>
+        You can also use the Mintlify dashboard to create a new repository automatically.
+      </Note>
+    </Step>
+    
+    <Step title="Preview your docs">
+      Run the development server to see your docs in real-time.
+      
+      ```bash
+      mint dev
+      ```
+      
+      Your documentation will be available at `http://localhost:3000`.
+    </Step>
+    
+    <Step title="Deploy to production">
+      Connect your repository to Mintlify and deploy with a single click.
+      
+      <Tip>
+        Every push to your main branch automatically deploys to production. Preview deployments are created for pull requests.
+      </Tip>
+    </Step>
+  </Steps>
+</div>
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white">
+    Explore by topic
+  </h2>
+  <p className="mt-2 text-base text-gray-600 dark:text-gray-400">
+    Everything you need to create world-class documentation
+  </p>
+  
+  <CardGroup cols={2} className="mt-8">
     <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+      title="Create content"
+      icon="pen-line"
+      href="/create/text"
+    >
+      Write beautiful documentation with MDX, components, and rich formatting
+    </Card>
+    <Card
+      title="Web editor"
+      icon="browser"
+      href="/editor/overview"
+    >
+      Edit and publish pages directly in your browser with our visual editor
+    </Card>
+    <Card
+      title="AI Agent"
+      icon="robot"
+      href="/agent/overview"
+    >
+      Let AI help you create and maintain documentation automatically
+    </Card>
+    <Card
+      title="Components"
+      icon="grid"
+      href="/components/overview"
+    >
+      Build interactive docs with tabs, accordions, cards, and more
+    </Card>
+    <Card
+      title="Document APIs"
+      icon="code"
+      href="/api-playground/overview"
+    >
+      Auto-generate API docs from OpenAPI specs with interactive playgrounds
+    </Card>
+    <Card
+      title="Customize themes"
+      icon="palette"
+      href="/customize/themes"
+    >
+      Match your brand with custom themes, colors, and fonts
+    </Card>
+    <Card
+      title="Deploy"
+      icon="rocket"
+      href="/deploy/deployments"
+    >
+      Deploy to production with preview deployments and custom domains
+    </Card>
+    <Card
+      title="Analytics"
+      icon="chart-line"
+      href="/optimize/analytics"
+    >
+      Track page views, search queries, and user engagement
+    </Card>
+  </CardGroup>
+</div>
 
-## Create beautiful pages
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white">
+    AI-native features
+  </h2>
+  <p className="mt-2 text-base text-gray-600 dark:text-gray-400">
+    Built-in AI tools to help users find answers and maintain your docs
+  </p>
+  
+  <CardGroup cols={3} className="mt-8">
+    <Card
+      title="AI Assistant"
+      icon="message-bot"
+      href="/ai/assistant"
+    >
+      Let users ask questions and get instant, cited answers from your documentation
+    </Card>
+    <Card
+      title="Slack Bot"
+      icon="slack"
+      href="/ai/slack-bot"
+    >
+      Answer team questions directly in Slack with AI-powered responses
+    </Card>
+    <Card
+      title="Discord Bot"
+      icon="discord"
+      href="/ai/discord"
+    >
+      Provide instant support to your community with an AI bot in Discord
+    </Card>
+  </CardGroup>
+</div>
 
-Everything you need to create world-class documentation.
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white">
+    Resources
+  </h2>
+  <p className="mt-2 text-base text-gray-600 dark:text-gray-400">
+    Guides, best practices, and examples to help you succeed
+  </p>
+  
+  <CardGroup cols={2} className="mt-8">
+    <Card
+      title="Best practices"
+      icon="trophy"
+      href="/guides/content-types"
+    >
+      Learn how to write effective documentation that users love
+    </Card>
+    <Card
+      title="Use cases"
+      icon="lightbulb"
+      href="/guides/developer-documentation"
+    >
+      See how teams use Mintlify for developer docs, knowledge bases, and more
+    </Card>
+    <Card
+      title="API reference"
+      icon="terminal"
+      href="/api/introduction"
+    >
+      Explore the Mintlify API for programmatic access to your documentation
+    </Card>
+    <Card
+      title="Integrations"
+      icon="puzzle-piece"
+      href="/integrations/analytics"
+    >
+      Connect with analytics, support tools, and other services
+    </Card>
+  </CardGroup>
+</div>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<div className="mt-20 mb-16 max-w-5xl mx-auto px-6">
+  <div className="rounded-2xl bg-gradient-to-br from-[#1be39b]/10 to-[#0c8c5c]/10 dark:from-[#1be39b]/20 dark:to-[#0c8c5c]/20 border border-[#1be39b]/20 dark:border-[#1be39b]/30 p-8 lg:p-12">
+    <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white">
+      Ready to get started?
+    </h2>
+    <p className="mt-4 text-base text-gray-600 dark:text-gray-400 max-w-2xl">
+      Join thousands of teams using Mintlify to create beautiful documentation. Deploy your first docs site in minutes.
+    </p>
+    <div className="mt-6">
+      <a
+        href="/quickstart"
+        className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#1be39b] text-white font-semibold hover:bg-[#0c8c5c] transition-colors"
+      >
+        Start Building
+      </a>
+    </div>
+  </div>
+</div>

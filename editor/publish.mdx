@@ -1,0 +1,228 @@
+---
+title: "Publish Changes"
+sidebarTitle: "Publish"
+description: "Save your work and publish documentation updates with Git-based workflows."
+---
+
+The web editor supports flexible publishing workflows that integrate with your repository's branch protection rules and team review processes.
+
+## Publishing Workflows
+
+The editor uses one of two workflows depending on your repository configuration:
+
+**Create Pull Requests**
+
+If your repository requires pull requests before merging to the deployment branch, the editor creates a pull request when you publish changes. Your team reviews the PR in GitHub or GitLab before merging.
+
+**Publish Directly**
+
+If your repository has no branch protection rules, changes merge to the deployment branch and deploy immediately when you publish.
+
+| Branch Type | Branch Protection | Publishing Workflow |
+|-------------|-------------------|---------------------|
+| Deployment branch | None | Commits and deploys changes |
+| Deployment branch | Pull requests required | Creates a pull request |
+| Feature branch | None | Merges to deployment branch and deploys |
+| Feature branch | Pull requests required | Creates a pull request |
+
+<Tip>
+  Configure branch protection rules in your Git provider to require pull requests for review. See [About protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches) (GitHub) or [Protected branches](https://docs.gitlab.com/user/project/repository/branches/protected/) (GitLab).
+</Tip>
+
+## Save Changes
+
+The editor tracks all changes you make:
+
+- New or deleted files
+- Content edits in pages
+- Navigation structure changes
+- Media uploads and organization
+- Configuration updates
+
+### On Deployment Branches
+
+When working on your deployment branch (typically `main`), changes save automatically. The toolbar shows pending changes that haven't been published yet.
+
+### On Feature Branches
+
+When working on a feature branch, click **Save in branch** to commit your changes to the branch. This creates a Git commit without triggering a deployment.
+
+### Discard Changes
+
+To discard unwanted changes:
+
+1. Click the files changed indicator in the toolbar
+2. Find the file you want to revert
+3. Click **Undo changes** next to the filename
+
+## Publish Your Changes
+
+Click **Publish** in the toolbar to deploy your changes or create a pull request.
+
+**What happens when you publish:**
+
+- If working on a deployment branch without protection: Changes deploy immediately
+- If working on any branch with branch protection: A pull request is created
+- If already have an open PR for your branch: The publish button is disabled
+
+<Note>
+  Save your changes to a feature branch before publishing. The publish button is disabled when there are unsaved changes on a feature branch.
+</Note>
+
+## Work with Branches
+
+Branches let you work on changes in isolation before they go live.
+
+### Switch Branches
+
+Click the branch name in the toolbar to see available branches:
+
+- Select an existing branch to switch to it
+- Click **Create new branch** to start fresh
+
+Switching branches loads that branch's content and changes in the editor.
+
+### Create Branches
+
+1. Click the branch name in the toolbar
+2. Click **Create new branch**
+3. Enter a branch name (use descriptive names like `update-api-docs` or `add-getting-started`)
+4. Select the source branch to base your new branch on
+
+The editor creates the branch in your repository and switches to it automatically.
+
+### Branch Types
+
+**Deployment Branch**
+
+The branch that builds your live documentation site (typically `main` or `master`). Changes merged into this branch automatically deploy.
+
+**Feature Branch**
+
+An isolated branch where you work on updates before merging to the deployment branch. Feature branches let you:
+
+- Work on changes without affecting your live site
+- Get feedback through preview deployments
+- Create pull requests for team review
+
+## Preview Changes
+
+The editor provides two ways to preview your work:
+
+### Live Preview
+
+Click the <Icon icon="play" /> play button in the toolbar for instant previews while editing. Live preview shows changes in real-time without creating a deployment.
+
+**Best for**: Immediate feedback as you work
+
+See [Live preview](/editor/live-preview) for details.
+
+### Preview Deployments
+
+Every branch gets a preview deployment at a temporary URL. Preview deployments update automatically when you save changes.
+
+**Access preview deployments:**
+
+1. Click **Publish** in the toolbar
+2. Click the preview URL (format: `organization-branch-name.mintlify.app`)
+
+**Best for**: Sharing with team members for review and testing on different devices
+
+See [Preview deployments](/editor/collaborate#preview-deployments) for details.
+
+## Resolve Conflicts
+
+Conflicts occur when your branch and the deployment branch have incompatible changes to the same files.
+
+### What Causes Conflicts
+
+Conflicts happen when:
+
+- You and another team member edit the same lines in a file
+- Files are moved or deleted in one branch but modified in another
+- Navigation changes overlap with changes on another branch
+
+### Resolve Conflicts
+
+The editor displays warnings when conflicts prevent operations like publishing or switching branches.
+
+**To resolve conflicts:**
+
+1. Follow the instructions in the editor warning
+2. Choose which changes to keep (yours, theirs, or both)
+3. Save the resolved file
+4. Continue with your publish or branch switch
+
+## Git Integration Features
+
+### Commit Signing
+
+Sign commits with your GitHub account by authorizing it in your [account settings](https://dashboard.mintlify.com/settings/account).
+
+**Why sign commits:**
+
+- Maintains accurate history of who made changes
+- Meets security requirements for verified commits
+- Shows green "Verified" badges in GitHub
+
+Without authorization, the Mintlify GitHub App signs commits made in the web editor.
+
+### Automatic Commits
+
+The editor creates commits automatically when you:
+
+- Save changes on a deployment branch
+- Click "Save in branch" on a feature branch
+- Upload media files
+- Make navigation changes
+
+Each commit includes a descriptive message about what changed.
+
+### Pull Request Creation
+
+When you publish from a feature branch, the editor:
+
+1. Pushes your commits to the remote repository
+2. Creates a pull request targeting your deployment branch
+3. Provides a link to view the PR in your Git provider
+
+You can add additional commits to the PR by making more changes and saving to the branch.
+
+## Collaboration Workflow
+
+Recommended workflow for team collaboration:
+
+<Steps>
+  <Step title="Create a feature branch">
+    Start a new branch for your changes to keep them isolated from the live site.
+  </Step>
+  <Step title="Make your changes">
+    Edit pages, update navigation, and configure settings in the editor.
+  </Step>
+  <Step title="Save to branch">
+    Click **Save in branch** to commit your changes without publishing.
+  </Step>
+  <Step title="Share preview">
+    Share the preview deployment URL with your team for feedback.
+  </Step>
+  <Step title="Publish and create PR">
+    Click **Publish** to create a pull request when your changes are ready.
+  </Step>
+  <Step title="Review and merge">
+    Team members review the PR in GitHub/GitLab and merge when approved.
+  </Step>
+</Steps>
+
+See [Collaborate in the web editor](/editor/collaborate) for more collaboration features.
+
+## Understanding Git Operations
+
+The editor handles Git operations automatically, but understanding what's happening helps you work more effectively:
+
+- **Commit**: A saved snapshot of your changes at a specific point in time
+- **Push**: Send commits from the editor to your remote repository
+- **Pull**: Fetch the latest changes from the remote repository
+- **Merge**: Combine changes from one branch into another
+- **Pull request**: A proposal to merge changes, allowing team review
+
+See [Git essentials for the web editor](/editor/git-essentials) to learn more about version control concepts.

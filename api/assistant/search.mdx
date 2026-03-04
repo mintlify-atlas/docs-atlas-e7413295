@@ -1,0 +1,147 @@
+---
+title: "Search Documentation"
+api: "POST https://api.mintlify.com/discovery/v1/search/{domain}"
+description: "Perform semantic and keyword searches across your documentation"
+keywords: ["search", "query"]
+---
+
+Perform semantic and keyword searches across your documentation with configurable filtering and pagination.
+
+## Authentication
+
+Requires an assistant API key (prefixed with `mint_dsc_`). Generate one on the [API keys page](https://dashboard.mintlify.com/settings/organization/api-keys) in your dashboard.
+
+The assistant API key is a public token that you can reference in frontend code.
+
+## Path Parameters
+
+<ParamField path="domain" type="string" required>
+  The domain identifier from your `domain.mintlify.app` URL. Can be found at the end of your dashboard URL. For example, `dashboard.mintlify.com/organization/domain` has a domain identifier of `domain`.
+</ParamField>
+
+## Body Parameters
+
+<ParamField body="query" type="string" required>
+  The search query to execute against your documentation content.
+</ParamField>
+
+<ParamField body="pageSize" type="number" default={10}>
+  Number of search results to return. Defaults to 10 if not specified.
+</ParamField>
+
+<ParamField body="filter" type="object">
+  Optional filtering parameters to narrow search results.
+  
+  <Expandable title="Filter object">
+    <ParamField body="version" type="string">
+      Filter results by documentation version.
+    </ParamField>
+    
+    <ParamField body="language" type="string">
+      Filter results by content language.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+## Response
+
+Returns an array of search results.
+
+<ResponseField name="content" type="string">
+  The matching content from your documentation.
+</ResponseField>
+
+<ResponseField name="path" type="string">
+  The path or URL to the source document.
+</ResponseField>
+
+<ResponseField name="metadata" type="object">
+  Additional metadata about the search result.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.mintlify.com/discovery/v1/search/your-domain \
+  -H "Authorization: Bearer mint_dsc_your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "how to install",
+    "pageSize": 10,
+    "filter": {
+      "version": "v2"
+    }
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch(
+  'https://api.mintlify.com/discovery/v1/search/your-domain',
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer mint_dsc_your_api_key_here',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: 'how to install',
+      pageSize: 10,
+      filter: {
+        version: 'v2'
+      }
+    }),
+  }
+);
+
+const results = await response.json();
+console.log(results);
+```
+
+```python Python
+import requests
+
+response = requests.post(
+    'https://api.mintlify.com/discovery/v1/search/your-domain',
+    headers={
+        'Authorization': 'Bearer mint_dsc_your_api_key_here',
+        'Content-Type': 'application/json'
+    },
+    json={
+        'query': 'how to install',
+        'pageSize': 10,
+        'filter': {
+            'version': 'v2'
+        }
+    }
+)
+
+results = response.json()
+print(results)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Response
+[
+  {
+    "content": "To install Mintlify, run npm install -g mintlify...",
+    "path": "/quickstart/installation",
+    "metadata": {
+      "title": "Installation Guide",
+      "version": "v2"
+    }
+  },
+  {
+    "content": "Installation steps: 1. Install Node.js 2. Run npm install...",
+    "path": "/getting-started",
+    "metadata": {
+      "title": "Getting Started",
+      "version": "v2"
+    }
+  }
+]
+```
+
+</ResponseExample>

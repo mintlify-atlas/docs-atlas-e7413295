@@ -1,0 +1,155 @@
+---
+title: "Create and Edit Pages"
+sidebarTitle: "Pages"
+description: "Create, edit, and manage documentation pages in the web editor."
+---
+
+Pages are the building blocks of your documentation. Use the web editor to create new pages, edit content in visual or Markdown mode, and configure how pages appear in navigation and search results.
+
+## Navigate Files
+
+Browse and search your documentation pages using the navigation panel:
+
+- **Browse**: Click navigation elements to expand or collapse sections, then click pages to open them
+- **Search**: Click the search icon or press `Cmd+K` (macOS) / `Ctrl+K` (Windows) to search filenames and page content
+- **Collapse sidebar**: Click the hide sidebar button in the toolbar to give the editor more space
+
+The search finds matches in both filenames and the content of your pages, making it easy to locate specific information.
+
+## Create New Pages
+
+Add pages to your documentation:
+
+1. Click the <Icon icon="plus" /> plus button in the navigation element where you want to add the page
+2. Click **Add a page**
+3. Enter a filename (the `.mdx` extension is added automatically)
+
+New pages are automatically added to your navigation structure and saved to your repository.
+
+### Add Existing Files
+
+If you have files in your repository that aren't yet in navigation:
+
+1. Click the <Icon icon="plus" /> plus button on the navigation element where you want to add the file
+2. Click **Add existing file** in the dropdown menu
+3. Select the file from your repository
+
+## Edit Content
+
+Switch between visual and Markdown editing modes using the toggle in the toolbar. The editor automatically saves your work when switching modes.
+
+### Visual Mode
+
+Edit content with real-time previews that show how your pages will look when published.
+
+**Text Formatting**
+
+- Type directly to add text and see it rendered in real-time
+- Use the toolbar to bold, italicize, or apply other formatting
+- Select text and press `Cmd+K` to create links
+- Drag pages from the navigation tree into the editor to create links with the page title
+
+**Adding Components**
+
+Press `/` to open the component menu and insert elements:
+
+- **Images**: Type `/image` to upload or select an image
+- **Videos**: Type `/video` to add video content
+- **Code blocks**: Type `/code` to insert syntax-highlighted code
+- **Callouts**: Type `/note`, `/tip`, `/warning`, or `/info` for callout boxes
+- **Embeds**: Type `/embed` to insert YouTube, Loom, or custom HTML embeds
+- **Mermaid diagrams**: Type `/mermaid` for interactive diagrams with zoom/pan controls
+- **Snippets**: Type `/snippet` to insert reusable content (import statement added automatically)
+- **Math equations**: Type `/inline-math` or `/block-math` for LaTeX equations (requires [enabling LaTeX](/editor/configurations))
+- **Prompt blocks**: Type `/prompt` for AI prompt templates with copy actions
+
+**Working with Tables**
+
+When your cursor is inside a table, use the floating toolbar to:
+
+- Add or remove rows and columns
+- Merge cells
+- Adjust alignment
+
+See the [Components documentation](/components) for the complete list of available components.
+
+### Markdown Mode
+
+Edit the MDX source code directly for precise control:
+
+- **Direct MDX editing**: Write Markdown and MDX syntax manually
+- **Component properties**: Set detailed component configurations and properties
+- **Frontmatter**: Edit page metadata like title, description, and keywords
+
+See [Format text](/create/text) and [Format code](/create/code) for MDX syntax details.
+
+## Configure Pages
+
+Customize how pages appear in navigation, search results, and your site layout.
+
+Access page settings by hovering over a page and clicking the gear icon, or right-click a file and select **Settings**.
+
+### Navigation Appearance
+
+Control how the page displays in your site's navigation sidebar:
+
+- **Title**: The main heading that appears in navigation, browser tabs, and search results
+- **Sidebar title**: Shorter text for the navigation when the full title is too long
+- **Icon**: Visual marker to help users identify the page quickly
+- **External URL**: Link to an external site instead of a page (useful for adding external resources)
+
+### Search and SEO
+
+Optimize how users find your page and how it appears when shared:
+
+- **Description**: Brief summary for search results and SEO meta tags
+- **Keywords**: Relevant search terms to improve discoverability
+- **OG Image URL**: Custom preview image for social media shares and link previews
+
+### Page Layout
+
+Choose the layout that best fits your content:
+
+- **Standard layout** (`default`): Default page with sidebar navigation and table of contents
+- **Full-width layout** (`wide`): Hides table of contents for wider content like tables or diagrams
+- **Centered layout** (`center`): Hides sidebar and TOC for better readability on text-heavy pages
+- **Custom width** (`custom`): Minimal layout with only the top navbar for landing pages
+
+## Manage Pages
+
+### Move Pages
+
+Drag and drop pages to reorder them in navigation or move files between folders. Changes to the navigation tree automatically update your `docs.json` configuration.
+
+### Rename Pages
+
+Right-click a file and click **Rename**. Enter the new name—the editor preserves the `.mdx` extension automatically.
+
+### Duplicate Pages
+
+Right-click a page and select **Duplicate** to create a copy.
+
+### Delete Pages
+
+Right-click a page and select **Delete**. Deleting a page removes it from navigation automatically.
+
+### Hide Pages
+
+To remove a page from navigation without deleting it:
+
+1. Open page settings
+2. Enable the **Hidden** toggle
+
+Hidden pages remain in your repository and users can still access them by navigating directly to the page's URL. Unhide pages in the settings or by adding them back to your `docs.json` navigation.
+
+## Keyboard Shortcuts
+
+Speed up your workflow with keyboard shortcuts:
+
+- `Cmd+K` / `Ctrl+K`: Open search or create link
+- `/`: Open component menu in visual mode
+- `Cmd+S` / `Ctrl+S`: Save changes
+- `Cmd+B` / `Ctrl+B`: Bold text
+- `Cmd+I` / `Ctrl+I`: Italic text
+
+See [Keyboard shortcuts](/editor/keyboard-shortcuts) for the complete list.

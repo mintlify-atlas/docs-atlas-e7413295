@@ -1,0 +1,86 @@
+---
+title: "Deployments"
+description: "Manage deployments, view history, and monitor status."
+keywords: ["manual deployment", "deployment history", "deployment triggers", "delete deployment"]
+---
+
+Your documentation site automatically deploys when you push changes to your connected repository. This requires the Mintlify GitHub app to be properly installed and connected.
+
+If your latest changes are not appearing on your live site, first check that the GitHub account or organization that owns your docs repository has the GitHub App installed. See [GitHub troubleshooting](/deploy/github#troubleshooting) for more information.
+
+If you have the GitHub App installed, but changes are still not deploying, manually trigger a deployment from your dashboard.
+
+## Git-based deployments
+
+Mintlify supports automatic deployments from both GitHub and GitLab repositories:
+
+- **GitHub**: Install the Mintlify GitHub App to enable automatic deployments on push events. The app creates status checks on pull requests and generates preview deployments. See [GitHub](/deploy/github) for setup instructions.
+- **GitLab**: Connect using access tokens and webhooks to sync changes and enable merge request previews. See [GitLab](/deploy/gitlab) for configuration steps.
+
+When you push commits to your deployment branch, Mintlify automatically builds and deploys your documentation. The deployment process:
+
+1. Detects changes pushed to your connected repository
+2. Builds your documentation with the latest content
+3. Deploys the updated site to your production URL
+4. Updates preview deployments for any open pull requests
+
+## Manually trigger a deployment
+
+<Steps>
+  <Step title="Verify your latest commit was successful.">
+    Check that your latest commit appears in your docs repository and did not encounter any errors.
+  </Step>
+  <Step title="Manually trigger a deployment.">
+    Go to your [dashboard](https://dashboard.mintlify.com) and select the deploy button.
+  <Frame>
+    <img src="/images/deployments/manual-update-light.png" alt="The manual update button emphasized with an orange rectangle." className="block dark:hidden" />
+    <img src="/images/deployments/manual-update-dark.png" alt="The manual update button emphasized with an orange rectangle." className="hidden dark:block" />
+  </Frame>
+  </Step>
+</Steps>
+
+## Deployment configuration
+
+Configure your deployment settings in the [Git Settings](https://dashboard.mintlify.com/settings/deployment/git-settings) section of your dashboard:
+
+- **Organization/Repository**: The Git repository containing your documentation
+- **Deployment branch**: The branch that triggers production deployments (typically `main` or `master`)
+- **Content directory**: The folder in your repository containing your docs (for monorepos)
+
+Changes to the deployment branch automatically trigger a new production build. Changes to other branches only trigger preview deployments when you create a pull request.
+
+## Continuous integration
+
+<Info>
+  [Pro and Enterprise plans](https://mintlify.com/pricing?ref=docs-ci) include CI checks for GitHub repositories.
+</Info>
+
+Run automated checks on your documentation before deployment:
+
+- **Broken links**: Automatically search for broken internal links
+- **Vale linting**: Check for consistency of style and tone using rule-based prose linting
+- **Grammar validation**: Ensure your documentation follows proper grammar rules
+
+Configure CI checks in the [Add-ons](https://dashboard.mintlify.com/products/addons) page of your dashboard. Choose between `Warning` (informational only) or `Blocking` (prevents merge) severity levels.
+
+See [CI checks](/deploy/ci) for detailed configuration instructions.
+
+## Delete a deployment
+
+You can permanently delete a deployment from the [Danger zone](https://dashboard.mintlify.com/settings/organization/danger-zone) in your dashboard settings. This action is irreversible and removes all deployment data, including any associated preview deployments.
+
+<Steps>
+  <Step title="Navigate to the Danger zone.">
+    Go to the [Danger zone](https://dashboard.mintlify.com/settings/organization/danger-zone) in the settings page of your dashboard.
+  </Step>
+  <Step title="Delete the deployment.">
+    1. In the **Delete my deployment** section, provide a reason for deletion.
+    2. Click the delete button and confirm that you want to delete the deployment.
+  </Step>
+</Steps>
+
+<Warning>
+  Deleting a deployment is permanent and cannot be undone. If you have an active subscription, you'll receive a prorated credit for any unused time remaining in your billing period.
+</Warning>
+
+If you have multiple deployments, you'll be redirected to another deployment after deletion. If you delete your only deployment, you'll be redirected to the Mintlify homepage. When you delete a deployment, the organization admin receives an email notification confirming the deletion.

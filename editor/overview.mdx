@@ -1,0 +1,89 @@
+---
+title: "Web Editor Overview"
+sidebarTitle: "Overview"
+description: "Edit and publish documentation directly in your browser with the Mintlify web editor."
+---
+
+The Mintlify web editor is a browser-based tool that lets you create, edit, and publish documentation without needing a local development environment. Make changes visually or in Markdown, preview your work in real-time, and publish updates using Git-based workflows.
+
+## Key Features
+
+The web editor provides a complete documentation authoring experience in your browser:
+
+**Visual and Markdown Editing**
+
+Switch between visual and Markdown editing modes to match your preferred workflow. The visual mode shows real-time previews of how content will appear when published, while Markdown mode gives you direct access to the MDX source code.
+
+**Live Preview**
+
+See your changes rendered instantly without creating a preview deployment. The live preview shows your pages exactly as they'll appear on your published site, updating in real-time as you edit content, navigation, and configuration.
+
+**Shareable Preview Links**
+
+Create preview deployments with temporary URLs to share with your team. Every time you save changes to a branch, the preview deployment updates automatically, making it easy to gather feedback before publishing.
+
+**Drag-and-Drop Navigation**
+
+Organize your site structure visually without manually editing configuration files. The navigation tree in the editor syncs directly to your `docs.json` file, letting you reorder pages and create nested sections with drag-and-drop.
+
+**Git Synchronization**
+
+All changes sync automatically with your documentation repository. The editor handles Git operations behind the scenes—creating commits when you save, managing branches, and creating pull requests when you publish.
+
+**Team Collaboration**
+
+Multiple team members can work simultaneously using branch-based workflows. Create feature branches to work on updates in isolation, use pull requests to review changes before they go live, and share editor links to collaborate on specific pages.
+
+## Getting Started
+
+The web editor is organized into several key areas:
+
+### Navigation Panel
+
+The left sidebar shows your documentation structure. Browse pages, search for content, create new files, and organize your navigation from this panel.
+
+### Editor Area
+
+The center area is where you edit page content. Toggle between visual and Markdown modes using the toolbar, and use the component menu (press `/`) to insert images, videos, code blocks, and other components.
+
+### Toolbar
+
+The top toolbar shows your current branch, pending changes, and actions like Save, Publish, and Preview. Click the branch name to switch branches or create new ones.
+
+## Common Workflows
+
+### Quick Updates
+
+For minor edits that can go live immediately:
+
+1. Open the page you want to edit from the navigation panel
+2. Make your changes in visual or Markdown mode
+3. Click **Publish** to deploy changes directly (if working on your deployment branch)
+
+### Collaborative Changes
+
+For updates that need review before publishing:
+
+1. Create a new branch or switch to an existing feature branch
+2. Make your changes and save them to the branch
+3. Click **Publish** to create a pull request
+4. Share the preview deployment URL with your team
+5. Merge the pull request after approval
+
+## Browser Requirements
+
+The web editor works in modern browsers including Chrome, Firefox, Safari, and Edge. For the best experience, use the latest version of your browser.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create Pages" icon="file-plus" href="/editor/pages">
+    Learn how to create and edit documentation pages
+  </Card>
+  <Card title="Organize Navigation" icon="list-tree" href="/editor/navigation">
+    Structure your site with the navigation editor
+  </Card>
+  <Card title="Publish Changes" icon="rocket" href="/editor/publish">
+    Understand publishing workflows and Git operations
+  </Card>
+</CardGroup>

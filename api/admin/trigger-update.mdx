@@ -1,0 +1,79 @@
+---
+title: "Trigger Update"
+api: "POST https://api.mintlify.com/v1/project/update/{projectId}"
+description: "Queue a deployment update for your documentation project"
+keywords: ["trigger", "update", "deployment", "programmatic"]
+---
+
+Queue a deployment update for your documentation project. Returns a status ID that can be used to track the update progress. The update is triggered from your configured deployment branch.
+
+## Authentication
+
+Requires an admin API key (prefixed with `mint_`). Generate one on the [API keys page](https://dashboard.mintlify.com/settings/organization/api-keys) in your dashboard.
+
+## Path Parameters
+
+<ParamField path="projectId" type="string" required>
+  Your project ID. Can be copied from the [API keys](https://dashboard.mintlify.com/settings/organization/api-keys) page in your dashboard.
+</ParamField>
+
+## Response
+
+<ResponseField name="statusId" type="string">
+  The status ID of the triggered update. Use this with the [Get update status](/api/admin/status) endpoint to track progress.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.mintlify.com/v1/project/update/your_project_id \
+  -H "Authorization: Bearer mint_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch(
+  'https://api.mintlify.com/v1/project/update/your_project_id',
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer mint_your_api_key_here',
+    },
+  }
+);
+
+const data = await response.json();
+console.log(data.statusId);
+```
+
+```python Python
+import requests
+
+response = requests.post(
+    'https://api.mintlify.com/v1/project/update/your_project_id',
+    headers={
+        'Authorization': 'Bearer mint_your_api_key_here'
+    }
+)
+
+data = response.json()
+print(data['statusId'])
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 202 Response
+{
+  "statusId": "6501a2b3c4d5e6f7g8h9i0j1"
+}
+```
+
+</ResponseExample>
+
+## Common use cases
+
+- **CI/CD integration**: Trigger documentation updates automatically when code changes are pushed to your repository
+- **Scheduled updates**: Set up cron jobs to refresh documentation at regular intervals
+- **Webhook integration**: Update docs in response to external events or API calls
+- **Multi-environment deployments**: Programmatically manage deployments across different environments

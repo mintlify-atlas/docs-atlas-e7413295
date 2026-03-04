@@ -1,0 +1,197 @@
+---
+title: "Custom domain"
+description: "Configure a custom domain or subpath for your documentation site."
+keywords: ["custom domain", "DNS configuration", "subpath hosting", "domain setup"]
+---
+
+Host your documentation on your own domain instead of the default `mintlify.dev` subdomain. Mintlify supports both root domains (`docs.yoursite.com`) and subpaths (`yoursite.com/docs`).
+
+## Domain vs subpath hosting
+
+**Custom domain hosting** serves your documentation at a dedicated subdomain:
+- `docs.yoursite.com`
+- `help.yoursite.com`
+- `developers.yoursite.com`
+
+This approach provides a dedicated URL for your documentation and is the simplest configuration option.
+
+**Subpath hosting** serves your documentation at a path on your main domain:
+- `yoursite.com/docs`
+- `yoursite.com/help`
+- `yoursite.com/resources`
+
+Subpath hosting requires a reverse proxy or CDN configuration to route traffic between your main site and documentation.
+
+## Set up a custom domain
+
+<Steps>
+  <Step title="Add your domain in the dashboard">
+    1. Navigate to [Custom domain setup](https://dashboard.mintlify.com/settings/deployment/custom-domain) in your dashboard.
+    2. Enter your desired domain (e.g., `docs.yoursite.com`).
+    3. Click **Add domain**.
+  </Step>
+  <Step title="Configure DNS records">
+    Add a CNAME record with your DNS provider:
+    
+    - **Type**: CNAME
+    - **Name**: Your subdomain (e.g., `docs`)
+    - **Value**: `cname.mintlify.dev`
+    - **TTL**: 3600 (or your provider's default)
+  </Step>
+  <Step title="Wait for DNS propagation">
+    DNS changes typically propagate within a few minutes but can take up to 48 hours depending on your DNS provider and TTL settings.
+  </Step>
+  <Step title="Verify the connection">
+    Once DNS propagates, Mintlify automatically provisions an SSL certificate and your documentation becomes available at your custom domain.
+  </Step>
+</Steps>
+
+### SSL certificates
+
+Mintlify automatically provisions and renews SSL certificates for custom domains using Let's Encrypt. This process typically completes within a few minutes after DNS propagation.
+
+If your certificate fails to provision:
+- Verify your DNS records are configured correctly
+- Ensure no conflicting DNS records exist
+- Check that your domain is not behind a proxy that blocks Let's Encrypt verification
+- Wait for DNS changes to fully propagate (up to 48 hours)
+
+## Subpath hosting with reverse proxy
+
+<Note>
+  Reverse proxy configurations are only supported for [Enterprise plans](https://mintlify.com/pricing?ref=reverse-proxy).
+</Note>
+
+To host documentation at a subpath like `yoursite.com/docs`, configure a reverse proxy to route traffic between your main site and Mintlify.
+
+Mintlify supports two approaches:
+
+### Host at `/docs` subpath (recommended)
+
+Use this configuration for the simplest setup when hosting at the `/docs` path:
+
+1. Navigate to [Custom domain setup](https://dashboard.mintlify.com/settings/deployment/custom-domain).
+2. Enable the **Host at `/docs`** toggle.
+3. Enter your domain and click **Add domain**.
+4. Configure your reverse proxy to route traffic from `yoursite.com/docs` to `<your-subdomain>.mintlify.dev`.
+
+<Warning>
+  When you enable **Host at `/docs`**, your canonical docs URL becomes `<your-subdomain>.mintlify.dev`. Cache invalidation stops on `mintlify.app`, and you must proxy to `mintlify.dev` for updates to appear.
+</Warning>
+
+### Custom subpath
+
+For subpaths other than `/docs` (such as `/help` or `/resources`), proxy traffic to `<your-subdomain>.mintlify.app` instead.
+
+See [Reverse proxy](/deploy/reverse-proxy) for complete configuration details including:
+- Required routing rules
+- Header forwarding requirements
+- Example nginx configurations
+- Troubleshooting common issues
+
+## Subpath hosting with CDN
+
+Configure your CDN or edge platform to route documentation requests to Mintlify while serving your main site from a different origin.
+
+### Cloudflare Workers
+
+Use Cloudflare Workers to proxy documentation requests:
+
+1. Create a Cloudflare Worker in your dashboard
+2. Configure the Worker to route `/docs/*` paths to your Mintlify subdomain
+3. Deploy the Worker to your custom domain
+
+Cloudflare automatically handles SSL certificates and CDN caching.
+
+See [Cloudflare](/deploy/cloudflare) for step-by-step setup instructions including:
+- Worker script examples
+- Vercel domain verification path configuration
+- Custom domain routing
+- Webflow integration
+
+### AWS CloudFront and Route 53
+
+Use AWS CloudFront as a CDN with Route 53 for DNS management:
+
+1. Create a CloudFront distribution with your Mintlify subdomain as the origin
+2. Configure behavior rules to route documentation paths
+3. Set up caching policies for optimal performance
+4. Point your Route 53 domain to the CloudFront distribution
+
+See [AWS Route 53 and CloudFront](/deploy/route53-cloudfront) for detailed configuration including:
+- CloudFront distribution setup
+- Behavior path patterns
+- Cache policy configuration
+- Route 53 DNS record creation
+
+## Domain verification for subpaths
+
+When using a reverse proxy or CDN to host documentation at a subpath, ensure your configuration allows traffic to these verification paths:
+
+- `/.well-known/acme-challenge/*` - Required for Let's Encrypt SSL certificate verification
+- `/.well-known/vercel/*` - Required for Vercel domain verification
+
+Blocking or redirecting these paths prevents SSL certificate provisioning and causes domain verification failures.
+
+Your proxy or CDN configuration must:
+- Allow traffic to `/.well-known/*` paths without modification
+- Forward the `Host` header correctly
+- Not cache verification requests
+
+## Troubleshooting custom domains
+
+### Domain not connecting
+
+**Symptoms**: Your custom domain shows an error or doesn't load.
+
+**Solutions**:
+- Verify your CNAME record points to `cname.mintlify.dev`
+- Check that no conflicting A or AAAA records exist
+- Confirm DNS changes have propagated using a DNS lookup tool
+- Wait up to 48 hours for DNS propagation
+
+### SSL certificate not provisioning
+
+**Symptoms**: Browser shows security warnings or "certificate invalid" errors.
+
+**Solutions**:
+- Verify DNS records are configured correctly and have propagated
+- Ensure `/.well-known/acme-challenge/*` paths are accessible
+- Check that your domain is not behind a proxy blocking verification
+- Remove any existing SSL certificates for the domain
+- Contact support if the issue persists after 48 hours
+
+### Subpath not working
+
+**Symptoms**: Main site loads but documentation subpath returns 404 errors.
+
+**Solutions**:
+- Verify your reverse proxy or CDN configuration is routing correctly
+- Check that the **Host at `/docs`** toggle matches your proxy target
+- Ensure header forwarding is configured properly
+- Test your Worker or CloudFront behavior rules
+- Review proxy logs for routing errors
+
+### Changes not appearing
+
+**Symptoms**: You publish updates but changes don't appear on your custom domain.
+
+**Solutions**:
+- Clear your CDN cache if using CloudFront or Cloudflare
+- Verify your proxy points to the correct Mintlify subdomain
+- Check that cache headers are configured correctly
+- If using **Host at `/docs`**, ensure you're proxying to `mintlify.dev` not `mintlify.app`
+- Trigger a manual deployment from your dashboard
+
+## Migration from subdomain to subpath
+
+When migrating from a custom subdomain to a subpath hosting configuration:
+
+1. Set up your reverse proxy or CDN configuration first
+2. Test the subpath thoroughly before changing DNS
+3. Keep your CNAME record active during testing
+4. Update internal links to use the new subpath structure
+5. Set up redirects from the old subdomain to the new subpath
+6. Remove the CNAME record only after verifying the subpath works correctly
+
+This approach ensures zero downtime during the migration process.

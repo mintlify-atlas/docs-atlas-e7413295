@@ -1,0 +1,91 @@
+---
+title: "Introduction"
+description: "Trigger updates, embed AI assistant, export analytics, and more"
+keywords: ["REST API", "endpoints", "API keys"]
+---
+
+The Mintlify REST API enables you to programmatically interact with your documentation, trigger updates, embed AI-powered chat experiences, and export analytics data.
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://api.mintlify.com/v1
+```
+
+For assistant and search endpoints:
+
+```
+https://api.mintlify.com/discovery
+```
+
+## Endpoints
+
+### Admin Operations
+
+- [Trigger update](/api/admin/trigger-update): Trigger an update of your site when desired.
+- [Get update status](/api/admin/status): Get the status of an update and other details about your docs.
+
+### Agent Operations
+
+- [Create agent job](/api/agent/create-job): Create an agent job to automatically edit your documentation.
+- [Get agent job](/api/agent/get-job): Retrieve the details and status of a specific agent job.
+
+### Assistant Operations
+
+- [Generate assistant message](/api/assistant/create-message): Embed the assistant, trained on your docs, into any application of your choosing.
+- [Search documentation](/api/assistant/search): Search through your documentation.
+
+### Analytics Export
+
+- [Get user feedback](/api/analytics/feedback): Export user feedback from your documentation.
+- [Get assistant conversations](/api/analytics/conversations): Export AI assistant conversation history.
+
+## Common use cases
+
+- **Automated deployments**: Trigger site updates at set intervals or when events occur with [Trigger update](/api/admin/trigger-update) and [Get update status](/api/admin/status).
+- **CI/CD integration**: Update documentation as part of your deployment pipeline when code changes with [Trigger update](/api/admin/trigger-update).
+- **Custom integrations**: Embed the AI assistant into your product, support portal, or internal tools with [Generate assistant message](/api/assistant/create-message) and [Search documentation](/api/assistant/search).
+- **Automated editing**: Use agent jobs to programmatically update documentation at scale with [Create agent job](/api/agent/create-job) and [Get agent job](/api/agent/get-job).
+- **Analytics export**: Export feedback and assistant conversations for external analysis with [Get user feedback](/api/analytics/feedback) and [Get assistant conversations](/api/analytics/conversations).
+
+## Authentication
+
+Generate API keys on the [API keys page](https://dashboard.mintlify.com/settings/organization/api-keys) in your dashboard. Each API key belongs to an organization--you can use keys across multiple deployments within the same organization.
+
+You can create up to 10 API keys per hour per organization.
+
+### Admin API key
+
+Use the admin API key to authenticate requests to [Trigger update](/api/admin/trigger-update), [Get update status](/api/admin/status), [Create agent job](/api/agent/create-job), [Get agent job](/api/agent/get-job), [Get user feedback](/api/analytics/feedback), and [Get assistant conversations](/api/analytics/conversations).
+
+Admin API keys begin with the `mint_` prefix. 
+
+The admin API key is a server-side secret. Do not expose it in client-side code.
+
+**Usage:**
+
+```bash
+curl -X POST https://api.mintlify.com/v1/project/update/{projectId} \
+  -H "Authorization: Bearer mint_your_api_key_here"
+```
+
+### Assistant API key
+
+Use the assistant API key to authenticate requests to [Generate assistant message](/api/assistant/create-message) and [Search documentation](/api/assistant/search) endpoints.
+
+Assistant API keys begin with the `mint_dsc_` prefix.
+
+The assistant API key is a public token that you can reference in frontend code.
+
+**Usage:**
+
+```bash
+curl -X POST https://api.mintlify.com/discovery/v1/assistant/{domain}/message \
+  -H "Authorization: Bearer mint_dsc_your_api_key_here"
+```
+
+<Note>
+  Calls using the assistant API token can incur costs: either using your assistant credits or incurring overages.
+</Note>

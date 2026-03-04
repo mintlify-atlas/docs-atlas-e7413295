@@ -1,0 +1,345 @@
+---
+title: "Support Integrations"
+description: "Add customer support widgets to provide in-app assistance to your documentation readers."
+---
+
+Integrate customer support platforms into your documentation to help users get answers quickly. Support widgets appear on your documentation pages, allowing readers to chat with your support team or access help resources without leaving the docs.
+
+## Supported platforms
+
+Mintlify integrates with the following support platforms:
+
+<CardGroup cols={2}>
+  <Card title="Intercom" icon="comments" href="#intercom">
+    In-app messaging and customer support
+  </Card>
+  <Card title="Front" icon="message-dots" href="#front">
+    Collaborative inbox and live chat
+  </Card>
+</CardGroup>
+
+## Intercom
+
+Add an [Intercom](https://www.intercom.com) messenger widget to your documentation for live chat and customer support.
+
+### Configuration
+
+Add the following to your `docs.json` file:
+
+```json docs.json
+"integrations": {
+  "intercom": {
+    "appId": "YOUR_APP_ID"
+  }
+}
+```
+
+### Getting your App ID
+
+<Steps>
+  <Step title="Log in to Intercom">
+    Go to your [Intercom dashboard](https://app.intercom.com).
+  </Step>
+  
+  <Step title="Navigate to Settings">
+    Click the settings icon in the bottom left corner.
+  </Step>
+  
+  <Step title="Find Installation settings">
+    Go to **Installation** > **Web** in the settings menu.
+  </Step>
+  
+  <Step title="Copy your App ID">
+    Your App ID appears in the installation code. It looks like `abc123def4`.
+    
+    Copy just the App ID (not the entire installation code).
+  </Step>
+  
+  <Step title="Add to docs.json">
+    Paste your App ID into your `docs.json` configuration:
+    
+    ```json docs.json
+    "integrations": {
+      "intercom": {
+        "appId": "abc123def4"
+      }
+    }
+    ```
+  </Step>
+</Steps>
+
+### Features
+
+When configured, Intercom provides:
+
+- **Live chat** - Real-time messaging with your support team
+- **Help center** - Access to articles and FAQs within the messenger
+- **Product tours** - Guide users through features
+- **Custom bots** - Automated responses to common questions
+- **User tracking** - See which pages users visit before contacting support
+
+### Example
+
+```json docs.json
+{
+  "name": "My Documentation",
+  "integrations": {
+    "intercom": {
+      "appId": "abc123def4"
+    }
+  }
+}
+```
+
+## Front
+
+Add a [Front Chat](https://front.com) widget to enable customer conversations through a collaborative inbox.
+
+### Configuration
+
+Add the following to your `docs.json` file:
+
+```json docs.json
+"integrations": {
+  "frontchat": "YOUR_CHAT_ID"
+}
+```
+
+<Note>
+Note the different structure - Front Chat uses a direct string value instead of an object.
+</Note>
+
+### Getting your Chat ID
+
+<Steps>
+  <Step title="Log in to Front">
+    Go to your [Front dashboard](https://app.frontapp.com).
+  </Step>
+  
+  <Step title="Open Settings">
+    Click **Settings** in the top navigation.
+  </Step>
+  
+  <Step title="Navigate to Channels">
+    Go to **Channels** > **Chat** in the settings menu.
+  </Step>
+  
+  <Step title="Get Chat ID">
+    Find your chat widget and copy the Chat ID. It looks like a long hexadecimal string: `1365d046d7c023e9b030ce90d02d093a`.
+  </Step>
+  
+  <Step title="Add to docs.json">
+    Paste your Chat ID into your `docs.json` configuration:
+    
+    ```json docs.json
+    "integrations": {
+      "frontchat": "1365d046d7c023e9b030ce90d02d093a"
+    }
+    ```
+  </Step>
+</Steps>
+
+### Features
+
+Front Chat provides:
+
+- **Live chat** - Real-time conversations with your team
+- **Team collaboration** - Multiple team members can respond
+- **Conversation history** - Full context of previous interactions
+- **CRM integration** - Connect with your existing tools
+- **Custom branding** - Match your documentation design
+
+### Example
+
+```json docs.json
+{
+  "name": "My Documentation",
+  "integrations": {
+    "frontchat": "1365d046d7c023e9b030ce90d02d093a"
+  }
+}
+```
+
+## Widget behavior
+
+Support widgets typically:
+
+- Appear as a floating button in the bottom-right corner
+- Open a chat window when clicked
+- Display unread message counts
+- Allow users to continue conversations across sessions
+- Work on all documentation pages
+
+### Widget positioning
+
+Both Intercom and Front Chat widgets:
+- Float above page content
+- Don't interfere with navigation or reading
+- Collapse automatically when not in use
+- Maintain position when scrolling
+
+## Combining support integrations
+
+You can use multiple support integrations together:
+
+```json docs.json
+"integrations": {
+  "intercom": {
+    "appId": "abc123def4"
+  },
+  "frontchat": "1365d046d7c023e9b030ce90d02d093a"
+}
+```
+
+<Warning>
+Using multiple chat widgets may confuse users. Consider using only one support platform or conditionally showing widgets based on user attributes.
+</Warning>
+
+## Combining with analytics
+
+Support integrations work alongside analytics platforms:
+
+```json docs.json
+"integrations": {
+  "ga4": {
+    "measurementId": "G-XXXXXXXXXX"
+  },
+  "intercom": {
+    "appId": "abc123def4"
+  },
+  "posthog": {
+    "apiKey": "phc_xxxxxxxxxxxxx"
+  }
+}
+```
+
+This allows you to:
+- Track when users open chat
+- Correlate support requests with page views
+- Identify which pages generate the most support questions
+- Measure documentation effectiveness
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Set up automated responses">
+    - Configure chatbots for common questions
+    - Link to relevant documentation pages in responses
+    - Set expectations for response times
+    - Provide self-service options before live chat
+  </Accordion>
+  
+  <Accordion title="Monitor support metrics">
+    - Track which pages generate the most support requests
+    - Identify documentation gaps from common questions
+    - Measure response times and user satisfaction
+    - Use insights to improve documentation
+  </Accordion>
+  
+  <Accordion title="Customize widget appearance">
+    - Match widget colors to your brand
+    - Customize welcome messages
+    - Set appropriate online/offline status
+    - Use friendly, helpful language
+  </Accordion>
+  
+  <Accordion title="Train your team">
+    - Ensure team members understand your product
+    - Create response templates for common questions
+    - Link to specific documentation sections in responses
+    - Escalate technical issues appropriately
+  </Accordion>
+</AccordionGroup>
+
+## Use cases
+
+### Developer documentation
+
+- Answer technical questions in real-time
+- Help developers troubleshoot integration issues
+- Provide code examples and guidance
+- Collect feedback on API design
+
+### Product documentation
+
+- Guide users through complex workflows
+- Clarify feature capabilities
+- Assist with account setup
+- Handle billing and subscription questions
+
+### Internal documentation
+
+- Support internal teams with processes
+- Answer HR and policy questions
+- Provide IT support
+- Facilitate knowledge sharing
+
+## Privacy considerations
+
+<Warning>
+Support widgets may:
+- Track user behavior on your docs
+- Store conversation history
+- Collect user information (email, name, etc.)
+- Use cookies for session management
+
+Ensure compliance with privacy regulations (GDPR, CCPA) and include appropriate notices in your privacy policy.
+</Warning>
+
+### Privacy best practices
+
+- Add cookie consent banners
+- Update your privacy policy to mention support integrations
+- Allow users to opt out of tracking
+- Delete user data upon request
+- Anonymize conversation logs when appropriate
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Widget not appearing">
+    - Verify your App ID or Chat ID is correct
+    - Check that the integration is properly formatted in `docs.json`
+    - Clear your browser cache and reload the page
+    - Ensure no ad blockers are blocking the widget
+    - Check browser console for JavaScript errors
+  </Accordion>
+  
+  <Accordion title="Widget appears but doesn't work">
+    - Verify your support platform account is active
+    - Check that the widget is enabled in your platform settings
+    - Ensure team members are set to "online" status
+    - Test with a different browser or device
+  </Accordion>
+  
+  <Accordion title="Widget positioning issues">
+    - Check for CSS conflicts with custom styles
+    - Verify z-index values don't hide the widget
+    - Test on different screen sizes
+    - Contact the support platform about customization options
+  </Accordion>
+  
+  <Accordion title="Messages not reaching team">
+    - Verify team member email notifications are enabled
+    - Check spam folders for notification emails
+    - Ensure correct team members have access
+    - Review routing rules in your platform settings
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Analytics Integrations" icon="chart-line" href="/integrations/analytics">
+    Add analytics to track documentation usage
+  </Card>
+  <Card title="Intercom Docs" icon="arrow-up-right-from-square" href="https://www.intercom.com/help">
+    Learn more about Intercom features
+  </Card>
+  <Card title="Front Docs" icon="arrow-up-right-from-square" href="https://help.front.com">
+    Explore Front Chat capabilities
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Return to documentation setup guide
+  </Card>
+</CardGroup>
